@@ -35,5 +35,13 @@ describe('Test Contact App', () => {
         .eq(2)
         .contains('Email')
     })
+
+    it("Test if fourth column title 'Actions' is present", () => {
+      cy.get('tr')
+        .eq(0)
+        .find('th')
+        .eq(3)
+        .contains('Actions')
+    })
   })
 });
