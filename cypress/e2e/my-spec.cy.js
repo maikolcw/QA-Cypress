@@ -10,4 +10,14 @@ describe('Test Contact App', () => {
   })
 
   // Add tests here
+
+  describe('Test if starter elements are present', () => {
+    it("Test if first column 'Name' is present", () => {
+      cy.get('tr')
+        .eq(0)
+        .find('th')
+        .eq(1)
+        .contains('Name')
+    })
+  })
 });
