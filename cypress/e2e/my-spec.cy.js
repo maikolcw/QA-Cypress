@@ -11,37 +11,39 @@ describe('Test Contact App', () => {
 
   // Add tests here
 
-  describe('Test if starter elements are present', () => {
-    it("Test if first column title 'Name' is present", () => {
-      cy.get('tr')
-        .eq(0)
-        .find('th')
-        .eq(0)
-        .contains('Name')
-    })
+  context('Test if starter elements are present', () => {
+    context('Table element', () => {
+      it("Test if first column title 'Name' is present", () => {
+        cy.get('tr')
+          .eq(0)
+          .find('th')
+          .eq(0)
+          .contains('Name')
+      })
 
-    it("Test if second column title 'Phone' is present", () => {
-      cy.get('tr')
-        .eq(0)
-        .find('th')
-        .eq(1)
-        .contains('Phone')
-    })
+      it("Test if second column title 'Phone' is present", () => {
+        cy.get('tr')
+          .eq(0)
+          .find('th')
+          .eq(1)
+          .contains('Phone')
+      })
 
-    it("Test if third column title 'Email' is present", () => {
-      cy.get('tr')
-        .eq(0)
-        .find('th')
-        .eq(2)
-        .contains('Email')
-    })
+      it("Test if third column title 'Email' is present", () => {
+        cy.get('tr')
+          .eq(0)
+          .find('th')
+          .eq(2)
+          .contains('Email')
+      })
 
-    it("Test if fourth column title 'Actions' is present", () => {
-      cy.get('tr')
-        .eq(0)
-        .find('th')
-        .eq(3)
-        .contains('Actions')
+      it("Test if fourth column title 'Actions' is present", () => {
+        cy.get('tr')
+          .eq(0)
+          .find('th')
+          .eq(3)
+          .contains('Actions')
+      })
     })
   })
 });
