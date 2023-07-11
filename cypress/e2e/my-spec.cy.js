@@ -199,4 +199,31 @@ describe('Test Contact App', () => {
         .should('have.length', 1)
     })
   })
+
+  // Negative test to check if future implementation will fix checking of values for input
+  context("Negative tests", () => {
+    context("Adding incorrect name values", () => {
+      it("Test if name can contain numbers", () => {
+        cy.addContact("999", "604-123-4567", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if name can be empty", () => {
+        cy.addContact("", "604-123-4567", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if name can can contain non alphanumeric characters", () => {
+        cy.addContact("-=@%(^*", "604-123-4567", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if name can longer than 100 characters", () => {
+        cy.addContact("fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea",
+          "604-123-4567", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+    })
+    
+  })
 });
