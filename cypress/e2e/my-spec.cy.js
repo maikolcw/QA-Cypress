@@ -218,8 +218,8 @@ describe('Test Contact App', () => {
         cy.numberOfTrInTableShouldBeX(2)
       })
 
-      it("Test if name can longer than 100 characters", () => {
-        cy.addContact("fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea",
+      it("Test if name can be longer than 100 characters", () => {
+        cy.addContact("Fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea",
           "604-123-4567", "john@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
@@ -287,7 +287,7 @@ describe('Test Contact App', () => {
       })
     })
 
-    context.only("Editing incorrect name values", () => {
+    context("Editing incorrect name values", () => {
       it("Test if name can contain numbers", () => {
         cy.addContact("John", "604-123-4567", "john@email.com")
         cy.changeAndCheckIfYValueChanged(1, "name", "jo9n")
@@ -298,7 +298,15 @@ describe('Test Contact App', () => {
         cy.changeAndCheckIfYValueChanged(1, "name", "")
       })
 
-      
+      it("Test if name can can contain non alphanumeric characters", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "name", "-=@%(^*")
+      })
+
+      it("Test if name can be longer than 100 characters", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "name", "Fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea")
+      })
     })
   })
 });
