@@ -16,25 +16,25 @@ describe('Test Contact App', () => {
       it("Test if first column title 'Name' is present", () => {
         cy.get('th')
           .eq(0)
-          .contains('Name')
+          .contains(Cypress.env('column_name'))
       })
 
       it("Test if second column title 'Phone' is present", () => {
         cy.get('th')
           .eq(1)
-          .contains('Phone')
+          .contains(Cypress.env('column_phone'))
       })
 
       it("Test if third column title 'Email' is present", () => {
         cy.get('th')
           .eq(2)
-          .contains('Email')
+          .contains(Cypress.env('column_email'))
       })
 
       it("Test if fourth column title 'Actions' is present", () => {
         cy.get('th')
           .eq(3)
-          .contains('Actions')
+          .contains(Cypress.env('column_actions'))
       })
     })
 
@@ -43,21 +43,21 @@ describe('Test Contact App', () => {
         cy.get('input')
           .eq(0)
           .should('have.attr', 'placeholder')
-          .and('equal', 'Name')
+          .and('equal', Cypress.env('column_name'))
       })
 
       it("Test if second input has placeholder 'Phone", () => {
         cy.get('input')
           .eq(1)
           .should('have.attr', 'placeholder')
-          .and('equal', 'Phone')
+          .and('equal', Cypress.env('column_phone'))
       })
 
       it("Test if third input has placeholder 'Email", () => {
         cy.get('input')
           .eq(2)
           .should('have.attr', 'placeholder')
-          .and('equal', 'Email')
+          .and('equal', Cypress.env('column_email'))
       })
     })
 
@@ -72,7 +72,7 @@ describe('Test Contact App', () => {
   context("Test user journeys", () => {
     it("Add a contact", () => {
       // fill in data for 3 input fields and click add
-      cy.addContact("John", "604-123-4567", "john@email.com")
+      cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
       // check if new contact is added and data is correct
       const tr_array = () => cy.get('tr')
       tr_array()
@@ -81,17 +81,17 @@ describe('Test Contact App', () => {
         .eq(1)
         .find('td')
         .eq(0)
-        .contains('John')
+        .contains(Cypress.env('default_name'))
       tr_array()
         .eq(1)
         .find('td')
         .eq(1)
-        .contains('604-123-4567')
+        .contains(Cypress.env('default_phone'))
       tr_array()
         .eq(1)
         .find('td')
         .eq(2)
-        .contains('john@email.com')
+        .contains(Cypress.env('default_email'))
       // check if edit and delete button is present in row
       tr_array()
         .eq(1)
@@ -108,7 +108,7 @@ describe('Test Contact App', () => {
     })
 
     it("Edit a contact with name change", () => {
-      cy.addContact("John", "604-123-4567", "john@email.com")
+      cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
       // Edit all 3 values of contact
       cy.get('tr')
         .eq(1)
@@ -118,22 +118,22 @@ describe('Test Contact App', () => {
       added_contact_inputs()
         .eq(0)
         .clear()
-        .type("Jane")
+        .type(Cypress.env('correct_name'))
       added_contact_inputs()
         .eq(1)
         .clear()
-        .type("604-111-1111")
+        .type(Cypress.env('correct_phone'))
       added_contact_inputs()
         .eq(2)
         .clear()
-        .type("jane@email.com")
+        .type(Cypress.env('correct_email'))
       cy.getByButton('update')
         .click()
       // Check if edited values are correct (phone and email should be blank)
       const td_array = () => cy.get('tr').eq(1).find('td')
       td_array()
         .eq(0)
-        .contains("Jane")
+        .contains(Cypress.env('correct_name'))
       td_array()
         .eq(1)
         .should('have.value', "")
@@ -152,7 +152,7 @@ describe('Test Contact App', () => {
     })
 
     it("Edit a contact with no name change", () => {
-      cy.addContact("John", "604-123-4567", "john@email.com")
+      cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
       // Edit phone and email values only
       cy.get('tr')
         .eq(1)
@@ -162,24 +162,24 @@ describe('Test Contact App', () => {
       added_contact_inputs()
         .eq(1)
         .clear()
-        .type("604-111-1111")
+        .type(Cypress.env('correct_phone'))
       added_contact_inputs()
         .eq(2)
         .clear()
-        .type("jane@email.com")
+        .type(Cypress.env('correct_email'))
       cy.getByButton('update')
         .click()
       // Check if edited values are correct
       const td_array = () => cy.get('tr').eq(1).find('td')
       td_array()
         .eq(0)
-        .contains("John")
+        .contains(Cypress.env('default_name'))
       td_array()
         .eq(1)
-        .contains("604-111-1111")
+        .contains(Cypress.env('correct_phone'))
       td_array()
         .eq(2)
-        .contains("jane@email.com")
+        .contains(Cypress.env('correct_email'))
       // Check if edit and delete button is still present
       td_array()
         .eq(3)
@@ -192,7 +192,7 @@ describe('Test Contact App', () => {
     })
 
     it("Delete a contact", () => {
-      cy.addContact("John", "604-123-4567", "john@email.com")
+      cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
       cy.getByButton('delete')
         .click()
       cy.get('tr')
@@ -204,23 +204,23 @@ describe('Test Contact App', () => {
   context("Negative tests", () => {
     context("Adding incorrect name values", () => {
       it("Test if name can contain numbers", () => {
-        cy.addContact("999", "604-123-4567", "john@email.com")
+        cy.addContact("999", Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if name can be empty", () => {
-        cy.addContact("", "604-123-4567", "john@email.com")
+        cy.addContact("", Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if name can can contain non alphanumeric characters", () => {
-        cy.addContact("-=@%(^*", "604-123-4567", "john@email.com")
+        cy.addContact("-=@%(^*", Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if name can be longer than 100 characters", () => {
         cy.addContact("Fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea",
-          "604-123-4567", "john@email.com")
+          Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
@@ -228,27 +228,27 @@ describe('Test Contact App', () => {
     // just some simple tests for phone numbers without knowing requirements or region
     context("Adding incorrect phone values", () => {
       it("Test if phone can contain letters", () => {
-        cy.addContact("John", "60X-12Y-456Z", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), "60X-12Y-456Z", Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if phone can be empty", () => {
-        cy.addContact("John", "", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), "", Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if phone can contain non alphanumeric characters other than '-'", () => {
-        cy.addContact("John", "6!4-12@-456$", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), "6!4-12@-456$", Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if phone can be delimited by white space", () => {
-        cy.addContact("John", "604 123 4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), "604 123 4567", Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if phone can be longer than 10 digits", () => {
-        cy.addContact("John", "1-604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), "1-604-123-4567", Cypress.env('default_email'))
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
@@ -256,32 +256,32 @@ describe('Test Contact App', () => {
     // Of course this is not an exhaustive list, depends on provider and requirements
     context("Adding incorrect email values", () => {
       it("Test email without @", () => {
-        cy.addContact("John", "604-123-4567", "johnemail.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), "johnemail.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if email can be empty", () => {
-        cy.addContact("John", "604-123-4567", "")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), "")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test email with bad domain", () => {
-        cy.addContact("John", "604-123-4567", "john@999")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), "john@999")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test email with non alphanumeric username", () => {
-        cy.addContact("John", "604-123-4567", "(#%@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), "(#%@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test email with non consecutive '.' username", () => {
-        cy.addContact("John", "604-123-4567", "john..smith@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), "john..smith@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if email can be longer than 100 characters", () => {
-        cy.addContact("John", "604-123-4567",
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'),
           "johnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnj@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
@@ -289,49 +289,49 @@ describe('Test Contact App', () => {
 
     context("Editing incorrect name values", () => {
       it("Test if name can contain numbers", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "name", "jo9n")
       })
 
       it("Test if name can be empty", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "name", "")
       })
 
       it("Test if name can can contain non alphanumeric characters", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "name", "-=@%(^*")
       })
 
       it("Test if name can be longer than 100 characters", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "name", "Fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea")
       })
     })
 
     context("Editing incorrect phone values", () => {
       it("Test if phone can contain letters", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "phone", "60X-12Y-456Z")
       })
 
       it("Test if phone can be empty", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "phone", "")
       })
 
       it("Test if phone can contain non alphanumeric characters other than '-'", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "phone", "6!4-12@-456$")
       })
 
       it("Test if phone can be delimited by white space", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "phone", "604 123 4567")
       })
 
       it("Test if phone can be longer than 10 digits", () => {
-        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "phone", "1-604-123-4567")
       })
     })
