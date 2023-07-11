@@ -53,6 +53,13 @@ describe('Test Contact App', () => {
           .should('have.attr', 'placeholder')
           .and('equal', 'Name')
       })
+
+      it("Test if second input has placeholder 'Phone", () => {
+        cy.get('input')
+          .eq(1)
+          .should('have.attr', 'placeholder')
+          .and('equal', 'Phone')
+      })
     })
   })
 });
