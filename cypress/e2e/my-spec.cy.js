@@ -60,6 +60,20 @@ describe('Test Contact App', () => {
           .should('have.attr', 'placeholder')
           .and('equal', 'Phone')
       })
+
+      it("Test if third input has placeholder 'Email", () => {
+        cy.get('input')
+          .eq(2)
+          .should('have.attr', 'placeholder')
+          .and('equal', 'Email')
+      })
+    })
+
+    context("Add button", () => {
+      it("Test if 'Add' button is present", () => {
+        cy.get('button[name="add"]')
+          .should('exist')
+      })
     })
   })
 });
