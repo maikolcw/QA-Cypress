@@ -27,3 +27,36 @@ Cypress.Commands.add("numberOfTrInTableShouldBeX", (length) => {
     return cy.get('tr')
         .should('have.length', length)
 })
+
+Cypress.Commands.add("changeAndCheckIfYValueChanged", (row_number, field_name, new_value) => {
+    var td_index = 0
+    switch (field_name) {
+        case 'name':
+            td_index = 0
+            break;
+        case 'phone':
+            td_index = 1
+            break;
+        default:
+            td_index = 2
+    }
+    cy.get('tr')
+        .eq(row_number)
+        .getByButton('edit')
+        .click()
+    cy.get('tr')
+        .eq(row_number)
+        .find('input')
+        .eq(td_index)
+        .clear()
+        .type(new_value)
+    cy.getByButton('update')
+        .click()
+    // Check if edited values are correct
+    cy.get('tr')
+        .eq(row_number)
+        .find('td')
+        .eq(td_index)
+        .contains(new_value)
+})
+

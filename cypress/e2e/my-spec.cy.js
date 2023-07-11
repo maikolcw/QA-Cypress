@@ -224,6 +224,7 @@ describe('Test Contact App', () => {
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
+
     // just some simple tests for phone numbers without knowing requirements or region
     context("Adding incorrect phone values", () => {
       it("Test if phone can contain letters", () => {
@@ -242,18 +243,18 @@ describe('Test Contact App', () => {
       })
 
       it("Test if phone can be delimited by white space", () => {
-        cy.addContact("John","604 123 4567", "john@email.com")
+        cy.addContact("John", "604 123 4567", "john@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if phone can be longer than 20 characters", () => {
-        cy.addContact("John","604-123-4567-4567-4567", "john@email.com")
+        cy.addContact("John", "604-123-4567-4567-4567", "john@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
 
     // Of course this is not an exhaustive list, depends on provider and requirements
-    context.only("Adding incorrect email values", () => {
+    context("Adding incorrect email values", () => {
       it("Test email without @", () => {
         cy.addContact("John", "604-123-4567", "johnemail.com")
         cy.numberOfTrInTableShouldBeX(2)
@@ -270,20 +271,29 @@ describe('Test Contact App', () => {
       })
 
       it("Test email with non alphanumeric username", () => {
-        cy.addContact("John","604-123-4567", "(#%@email.com")
+        cy.addContact("John", "604-123-4567", "(#%@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test email with non consecutive '.' username", () => {
-        cy.addContact("John","604-123-4567", "john..smith@email.com")
+        cy.addContact("John", "604-123-4567", "john..smith@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
 
       it("Test if email can be longer than 100 characters", () => {
-        cy.addContact("John","604-123-4567", 
-        "johnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnj@email.com")
+        cy.addContact("John", "604-123-4567",
+          "johnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnj@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
+    })
+
+    context.only("Editing incorrect name values", () => {
+      it("Test if name can contain numbers", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "name", "jo9n")
+      })
+
+      
     })
   })
 });
