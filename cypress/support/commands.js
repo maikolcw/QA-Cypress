@@ -74,6 +74,5 @@ Cypress.Commands.add("changeAndCheckIfYValueChanged", (row_number, field_name, n
             .eq(td_index)
             .should('be.empty') 
     }
-
 })
 

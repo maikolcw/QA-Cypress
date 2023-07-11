@@ -247,8 +247,8 @@ describe('Test Contact App', () => {
         cy.numberOfTrInTableShouldBeX(2)
       })
 
-      it("Test if phone can be longer than 20 characters", () => {
-        cy.addContact("John", "604-123-4567-4567-4567", "john@email.com")
+      it("Test if phone can be longer than 10 digits", () => {
+        cy.addContact("John", "1-604-123-4567", "john@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
@@ -306,6 +306,33 @@ describe('Test Contact App', () => {
       it("Test if name can be longer than 100 characters", () => {
         cy.addContact("John", "604-123-4567", "john@email.com")
         cy.changeAndCheckIfYValueChanged(1, "name", "Fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea")
+      })
+    })
+
+    context("Editing incorrect phone values", () => {
+      it("Test if phone can contain letters", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "phone", "60X-12Y-456Z")
+      })
+
+      it("Test if phone can be empty", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "phone", "")
+      })
+
+      it("Test if phone can contain non alphanumeric characters other than '-'", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "phone", "6!4-12@-456$")
+      })
+
+      it("Test if phone can be delimited by white space", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "phone", "604 123 4567")
+      })
+
+      it("Test if phone can be longer than 10 digits", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "phone", "1-604-123-4567")
       })
     })
   })
