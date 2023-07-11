@@ -219,13 +219,13 @@ describe('Test Contact App', () => {
       })
 
       it("Test if name can longer than 100 characters", () => {
-        cy.addContact("fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea",
+        cy.addContact("fivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivefivea",
           "604-123-4567", "john@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
     // just some simple tests for phone numbers without knowing requirements or region
-    context.only("Adding incorrect phone values", () => {
+    context("Adding incorrect phone values", () => {
       it("Test if phone can contain letters", () => {
         cy.addContact("John", "60X-12Y-456Z", "john@email.com")
         cy.numberOfTrInTableShouldBeX(2)
@@ -248,6 +248,40 @@ describe('Test Contact App', () => {
 
       it("Test if phone can be longer than 20 characters", () => {
         cy.addContact("John","604-123-4567-4567-4567", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+    })
+
+    // Of course this is not an exhaustive list, depends on provider and requirements
+    context.only("Adding incorrect email values", () => {
+      it("Test email without @", () => {
+        cy.addContact("John", "604-123-4567", "johnemail.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if email can be empty", () => {
+        cy.addContact("John", "604-123-4567", "")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test email with bad domain", () => {
+        cy.addContact("John", "604-123-4567", "john@999")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test email with non alphanumeric username", () => {
+        cy.addContact("John","604-123-4567", "(#%@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test email with non consecutive '.' username", () => {
+        cy.addContact("John","604-123-4567", "john..smith@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if email can be longer than 100 characters", () => {
+        cy.addContact("John","604-123-4567", 
+        "johnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnj@email.com")
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
