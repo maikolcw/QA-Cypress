@@ -106,6 +106,7 @@ describe('Test Contact App', () => {
         .find(`button[name=delete]`)
         .should('exist')
     })
+
     it("Edit a contact with name change", () => {
       cy.addContact("John", "604-123-4567", "john@email.com")
       // Edit all 3 values of contact
@@ -149,6 +150,7 @@ describe('Test Contact App', () => {
         .find(`button[name=delete]`)
         .should('exist')
     })
+
     it("Edit a contact with no name change", () => {
       cy.addContact("John", "604-123-4567", "john@email.com")
       // Edit phone and email values only
@@ -187,6 +189,14 @@ describe('Test Contact App', () => {
         .eq(3)
         .find(`button[name=delete]`)
         .should('exist')
+    })
+
+    it("Delete a contact", () => {
+      cy.addContact("John", "604-123-4567", "john@email.com")
+      cy.getByButton('delete')
+        .click()
+      cy.get('tr')
+        .should('have.length', 1)
     })
   })
 });
