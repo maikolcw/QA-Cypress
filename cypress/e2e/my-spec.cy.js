@@ -71,7 +71,7 @@ describe('Test Contact App', () => {
 
     context("Add button", () => {
       it("Test if 'Add' button is present", () => {
-        cy.get('button[name="add"]')
+        cy.getByButton('add')
           .should('exist')
       })
     })
