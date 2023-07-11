@@ -335,5 +335,38 @@ describe('Test Contact App', () => {
         cy.changeAndCheckIfYValueChanged(1, "phone", "1-604-123-4567")
       })
     })
+
+    context.only("Editing incorrect email values", () => {
+      it("Test email without @", () => {
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
+        cy.changeAndCheckIfYValueChanged(1, "email", "johnemail.com")
+      })
+
+      it("Test if email can be empty", () => {
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
+        cy.changeAndCheckIfYValueChanged(1, "email", "")
+      })
+
+      it("Test email with bad domain", () => {
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
+        cy.changeAndCheckIfYValueChanged(1, "email", "john@999")
+      })
+
+      it("Test email with non alphanumeric username", () => {
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
+        cy.changeAndCheckIfYValueChanged(1, "email", "(#%@email.com")
+      })
+
+      it("Test email with non consecutive '.' username", () => {
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
+        cy.changeAndCheckIfYValueChanged(1, "email", "john..smith@email.com")
+      })
+
+      it("Test if email can be longer than 100 characters", () => {
+        cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
+        cy.changeAndCheckIfYValueChanged(1, "email",
+          "johnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnjohnj@email.com")
+      })
+    })
   })
 });
