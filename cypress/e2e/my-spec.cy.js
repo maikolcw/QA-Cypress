@@ -72,14 +72,7 @@ describe('Test Contact App', () => {
   context("Test user journeys", () => {
     it("Add a contact", () => {
       // fill in data for 3 input fields and click add
-      cy.getByInput('Name')
-        .type("John")
-      cy.getByInput('Phone')
-        .type("604-123-4567")
-      cy.getByInput('Email')
-        .type("john@email.com")
-      cy.getByButton('add')
-        .click()
+      cy.addContact("John", "604-123-4567", "john@email.com")
       // check if new contact is added and data is correct
       const tr_array = () => cy.get('tr')
       tr_array()
@@ -119,5 +112,6 @@ describe('Test Contact App', () => {
         .find(`button[name=delete]`)
         .should('exist')
     })
+    
   })
 });
