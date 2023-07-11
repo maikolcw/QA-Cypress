@@ -14,33 +14,25 @@ describe('Test Contact App', () => {
   context('Test if starter elements are present', () => {
     context('Table element', () => {
       it("Test if first column title 'Name' is present", () => {
-        cy.get('tr')
-          .eq(0)
-          .find('th')
+        cy.get('th')
           .eq(0)
           .contains('Name')
       })
 
       it("Test if second column title 'Phone' is present", () => {
-        cy.get('tr')
-          .eq(0)
-          .find('th')
+        cy.get('th')
           .eq(1)
           .contains('Phone')
       })
 
       it("Test if third column title 'Email' is present", () => {
-        cy.get('tr')
-          .eq(0)
-          .find('th')
+        cy.get('th')
           .eq(2)
           .contains('Email')
       })
 
       it("Test if fourth column title 'Actions' is present", () => {
-        cy.get('tr')
-          .eq(0)
-          .find('th')
+        cy.get('th')
           .eq(3)
           .contains('Actions')
       })
@@ -76,4 +68,6 @@ describe('Test Contact App', () => {
       })
     })
   })
+
+  
 });
