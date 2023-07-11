@@ -224,6 +224,32 @@ describe('Test Contact App', () => {
         cy.numberOfTrInTableShouldBeX(2)
       })
     })
-    
+    // just some simple tests for phone numbers without knowing requirements or region
+    context.only("Adding incorrect phone values", () => {
+      it("Test if phone can contain letters", () => {
+        cy.addContact("John", "60X-12Y-456Z", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if phone can be empty", () => {
+        cy.addContact("John", "", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if phone can contain non alphanumeric characters other than '-'", () => {
+        cy.addContact("John", "6!4-12@-456$", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if phone can be delimited by white space", () => {
+        cy.addContact("John","604 123 4567", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+
+      it("Test if phone can be longer than 20 characters", () => {
+        cy.addContact("John","604-123-4567-4567-4567", "john@email.com")
+        cy.numberOfTrInTableShouldBeX(2)
+      })
+    })
   })
 });
