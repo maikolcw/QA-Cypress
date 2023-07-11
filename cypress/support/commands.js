@@ -44,19 +44,36 @@ Cypress.Commands.add("changeAndCheckIfYValueChanged", (row_number, field_name, n
         .eq(row_number)
         .getByButton('edit')
         .click()
-    cy.get('tr')
-        .eq(row_number)
-        .find('input')
-        .eq(td_index)
-        .clear()
-        .type(new_value)
+    if (new_value) {
+        cy.get('tr')
+            .eq(row_number)
+            .find('input')
+            .eq(td_index)
+            .clear()
+            .type(new_value)
+    } else {
+        cy.get('tr')
+            .eq(row_number)
+            .find('input')
+            .eq(td_index)
+            .clear()
+    }
     cy.getByButton('update')
         .click()
     // Check if edited values are correct
-    cy.get('tr')
-        .eq(row_number)
-        .find('td')
-        .eq(td_index)
-        .contains(new_value)
+    if (new_value) {
+        cy.get('tr')
+            .eq(row_number)
+            .find('td')
+            .eq(td_index)
+            .contains(new_value)
+    } else {
+        cy.get('tr')
+            .eq(row_number)
+            .find('td')
+            .eq(td_index)
+            .should('be.empty') 
+    }
+
 })
 

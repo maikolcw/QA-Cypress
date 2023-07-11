@@ -293,6 +293,11 @@ describe('Test Contact App', () => {
         cy.changeAndCheckIfYValueChanged(1, "name", "jo9n")
       })
 
+      it("Test if name can be empty", () => {
+        cy.addContact("John", "604-123-4567", "john@email.com")
+        cy.changeAndCheckIfYValueChanged(1, "name", "")
+      })
+
       
     })
   })
