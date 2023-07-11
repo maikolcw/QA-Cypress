@@ -10,7 +10,7 @@ describe('Test Contact App', () => {
   })
 
   // Add tests here
-
+  // Check if important UI elements are present
   context('Test if starter elements are present', () => {
     context('Table element', () => {
       it("Test if first column title 'Name' is present", () => {
@@ -69,6 +69,7 @@ describe('Test Contact App', () => {
     })
   })
 
+  // Test important user interactions with web application
   context("Test user journeys", () => {
     it("Add a contact", () => {
       // fill in data for 3 input fields and click add
@@ -336,7 +337,7 @@ describe('Test Contact App', () => {
       })
     })
 
-    context.only("Editing incorrect email values", () => {
+    context("Editing incorrect email values", () => {
       it("Test email without @", () => {
         cy.addContact(Cypress.env('default_name'), Cypress.env('default_phone'), Cypress.env('default_email'))
         cy.changeAndCheckIfYValueChanged(1, "email", "johnemail.com")
