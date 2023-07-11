@@ -45,5 +45,14 @@ describe('Test Contact App', () => {
           .contains('Actions')
       })
     })
+
+    context("Input elements", () => {
+      it("Test if first input has placeholder 'Name'", () => {
+        cy.get('input')
+          .eq(0)
+          .should('have.attr', 'placeholder')
+          .and('equal', 'Name')
+      })
+    })
   })
 });
